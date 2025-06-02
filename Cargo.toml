@@ -1,0 +1,45 @@
+[package]
+description = "Wake-on-LAN to libvirt gateway"
+name = "wol-libvirt-gateway"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/brunoproduit/wol-libvirt-gateway"
+homepage = "https://github.com/brunoproduit/wol-libvirt-gateway"
+documentation = "https://docs.rs/wol-libvirt-gateway"
+readme = "README.md"
+keywords = ["wake-on-lan", "libvirt", "gateway", "virtualization"]
+categories = ["network-programming", "virtualization"]
+
+[dependencies]
+tokio = { version = "1.45", default-features = false, features = [
+  "rt-multi-thread",
+  "macros",
+  "net",
+] }
+clap = { version = "4.5.38", default-features = false, features = [
+  "derive",
+  "std",
+] }
+log = { version = "0.4.27", default-features = false }
+env_logger = { version = "0.11.8", default-features = false, features = [
+  "auto-color",
+  "humantime",
+] }
+virt = { version = "0.4.2", default-features = false }
+uuid = { version = "1.16.0", default-features = false }
+serde-xml-rs = "0.8.1"
+serde = { version = "1.0.219", features = ["derive"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+improper_ctypes = "deny"
+improper_ctypes_definitions = "deny"
+invalid_reference_casting = "deny"
+overflowing_literals = "deny"
+patterns_in_fns_without_body = "deny"
+unreachable_pub = "deny"
+unused_assignments = "deny"
+dead_code = "deny"
+trivial_casts = "deny"
+trivial_numeric_casts = "deny"
