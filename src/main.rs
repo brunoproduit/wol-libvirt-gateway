@@ -1,13 +1,13 @@
 //! # WOL Libvirt Gateway
 //!
-//! A gateway service that provides Wake-on-LAN functionality for libvirt virtual machines.
-//! This service allows you to wake up virtual machines by sending Wake-on-LAN packets
-//! to their configured MAC addresses through a REST API interface.
+//! A simple Wake-on-LAN (WOL) gateway service for starting libvirt VMs. 
+//! It listens for WOL "magic packets" on UDP port 9 (configurable), identifies the target MAC address, 
+//! and if that MAC address belongs to a defined libvirt VM, it attempts to start that VM using the libvirt API.
 //!
 //! ## Usage
 //!
 //! ```bash
-//! wol-libvirt-gateway -a 0.0.0.0:8080 -l qemu:///system
+//! wol-libvirt-gateway --address 0.0.0.0:9 --libvirt-uri qemu:///system
 //! ```
 
 use clap::Parser;
@@ -27,9 +27,9 @@ mod wakeonlan;
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Cli {
-    /// The address and port to bind the HTTP server to.
+    /// The address and port to bind the WOL server to.
     ///
-    /// Format: `IP:PORT` (e.g., "127.0.0.1:8080" or "0.0.0.0:9090")
+    /// Format: `IP:PORT` (e.g., "127.0.0.1:9009" or "0.0.0.0:9009")
     /// Default: "127.0.0.1:9"
     #[arg(short, long, default_value = "127.0.0.1:9")]
     address: String,
@@ -65,7 +65,7 @@ struct Cli {
 ///
 /// Start the service on all interfaces with custom port:
 /// ```bash
-/// wol-libvirt-gateway --address 0.0.0.0:8080
+/// wol-libvirt-gateway --address 0.0.0.0:9009
 /// ```
 ///
 /// Connect to a remote libvirt instance:
